@@ -24,6 +24,10 @@ public class BowlingGameUnitTest {
         }
     }
 
+    private void rollOneStrike() {
+        game.roll(10);
+    }
+
     @Test
     public void testAllZeros() {
         repeatedRoll(0, 20);
@@ -42,8 +46,18 @@ public class BowlingGameUnitTest {
         game.roll(0);
         game.roll(1);
         game.roll(9);   // spare
-        repeatedRoll(0, 16 );
+        repeatedRoll(0, 16);
         assertEquals(12, game.score());
     }
+
+    @Test
+    public void testTwoSpare() {
+        rollOneStrike();
+        rollOneStrike();
+        repeatedRoll(1, 2);
+        repeatedRoll(0, 14);
+        assertEquals(35, game.score());
+    }
+
 
 }
