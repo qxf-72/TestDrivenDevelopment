@@ -1,27 +1,37 @@
 package cn.edu.jnu.x2021102308;
 
-import java.util.ArrayList;
-
-
 public class BowlingGame {
-    private ArrayList<Integer> pins;
+    private int rolls[] = new int[21];
+    private int currentRoll = 0;
 
-    public BowlingGame() {
-        pins = new ArrayList<>();
-    }
 
     public void roll(int pins) {
-        this.pins.add(pins);
+        rolls[currentRoll++] = pins;
     }
 
     public int score() {
         int score = 0;
-        for (int i = 0; i < pins.size(); i++) {
-            score += pins.get(i);
-            if (i + 2 < pins.size() && pins.get(i) + pins.get(i + 1) == 10) {
-                score += pins.get(i + 2);
+        int frameIndex = 0;
+        for (int frame = 0; frame < 10; frame++) {
+            if (isStrike(frameIndex)) {
+                score += 10 + rolls[frameIndex + 1] + rolls[frameIndex + 2];
+                frameIndex++;
+            } else if (isSpare(frameIndex)) {
+                score += 10 + rolls[frameIndex + 2];
+                frameIndex += 2;
+            } else {
+                score += rolls[frameIndex] + rolls[frameIndex + 1];
+                frameIndex += 2;
             }
         }
         return score;
+    }
+
+    private boolean isStrike(int frameIndex) {
+        return rolls[frameIndex] == 10;
+    }
+
+    boolean isSpare(int frameIndex) {
+        return rolls[frameIndex] + rolls[frameIndex + 1] == 10;
     }
 }
