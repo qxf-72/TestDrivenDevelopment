@@ -51,7 +51,7 @@ public class BowlingGameUnitTest {
     }
 
     @Test
-    public void testTwoSpare() {
+    public void testTwoStrike() {
         rollOneStrike();
         rollOneStrike();
         repeatedRoll(1, 2);
@@ -59,5 +59,15 @@ public class BowlingGameUnitTest {
         assertEquals(35, game.score());
     }
 
+    @Test
+    public void testAllStrike() {
+        rollStrikes(12);
+        assertEquals(300, game.score());
+    }
 
+    private void rollStrikes(int times) {
+        for (int i = 0; i < times; i++) {
+            rollOneStrike();
+        }
+    }
 }
