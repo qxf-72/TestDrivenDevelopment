@@ -18,6 +18,12 @@ public class BowlingGameUnitTest {
         game = new BowlingGame();
     }
 
+    private void repeatedRoll(int pins, int times) {
+        for (int i = 0; i < times; i++) {
+            game.roll(pins);
+        }
+    }
+
     @Test
     public void testAllZeros() {
         repeatedRoll(0, 20);
@@ -30,9 +36,14 @@ public class BowlingGameUnitTest {
         assertEquals(20, game.score());
     }
 
-    private void repeatedRoll(int pins, int times) {
-        for (int i = 0; i < times; i++) {
-            game.roll(pins);
-        }
+    @Test
+    public void testOneSpare() {
+        game.roll(2);
+        game.roll(0);
+        game.roll(1);
+        game.roll(9);   // spare
+        repeatedRoll(0, 16 );
+        assertEquals(12, game.score());
     }
+
 }
